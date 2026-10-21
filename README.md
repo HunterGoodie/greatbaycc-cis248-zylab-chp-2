@@ -1,6 +1,6 @@
 # CIS248 zyLAB Chapter 2 - Classes and Methods in Depth
-- Name:
-- Date:
+- Name: Hunter Goodie
+- Date: 10/20/26
 
 
 - zyLAB Challenges to be completed:
