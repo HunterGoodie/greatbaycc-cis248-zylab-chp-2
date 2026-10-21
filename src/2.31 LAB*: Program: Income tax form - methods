@@ -1,0 +1,119 @@
+import java.util.Scanner;
+
+public class LabProgram {
+   
+   // Calculate AGI and repair any negative values
+   public static int calcAGI(int wages, int interest, int unemployment) {
+      /* Complete the method and update the return statement */
+      if (wages < 0) {
+         wages = -wages;
+      }
+      if (interest < 0) {
+         interest = - interest;
+      }
+      if (unemployment < 0) {
+         unemployment = - unemployment;
+      }
+      return (unemployment + wages + interest);
+   }
+   
+   // Calculate deduction depending on single, dependent or married
+   public static int getDeduction(int status) {
+      if (status == 0) {
+         return 6000;
+      }
+      else if (status == 1) {
+         return 12000;
+      }
+      else if (status == 2) {
+         return 24000;
+      }
+      else {return 6000;}
+   }
+   
+   // Calculate taxable but not allow negative results
+   public static int calcTaxable(int agi, int deduction) {
+      /* Complete the method and update the return statement */
+      int tempCalc;
+
+      tempCalc = agi - deduction;
+      if (tempCalc < 0){
+
+         return 0;
+      }else{return tempCalc;}
+      
+   }  
+   
+   // Calculate tax for single or dependent
+   public static int calcTax(int status, int taxable) {
+      if ((status == 0) || (status == 1)) {
+         if (taxable <= 10000){
+            return (int) (taxable * .10);
+         }
+         else if (taxable <=40000){
+            return (int) (1000 + (taxable - 10000) * .12);
+         }
+         else if (taxable <= 85000){
+            return (int) (4600 + (taxable - 40000) * .22);
+         }
+         else if (taxable > 85000){
+            return (int) (14500 + (taxable - 85000) * .24);
+         }
+      }
+      else if (status == 2) {
+         if (taxable <= 20000){
+            return (int) (taxable * .10);
+         }
+         else if (taxable <=80000){
+            return (int) (2000 + (taxable - 20000) * .12);
+         }
+         else if (taxable > 80000){
+            return (int) (9200 + (taxable - 80000) * .22);
+         }
+      }
+      
+      return -1;
+   }   
+   
+   // Calculate tax due and check for negative withheld
+   public static int calcTaxDue(int tax, int withheld) {
+   
+      if (withheld <= 0 ){
+         withheld = 0;
+      }
+     
+      return (tax - withheld);
+   }
+   
+   public static void main(String [] args) {
+      Scanner scan = new Scanner(System.in);
+      int wages = 0;
+      int interest = 0;
+      int unemployment = 0;
+      int status = -1;
+      int withheld = 0; 
+      int agi;
+
+
+      // Step #1: Input information
+
+      wages = scan.nextInt();
+
+      interest = scan.nextInt();
+
+      unemployment = scan.nextInt();
+
+      status = scan.nextInt();
+
+      withheld = scan.nextInt();
+      
+      // Step #2: Calculate AGI
+      agi = calcAGI(wages, interest, unemployment);
+      System.out.printf("AGI: $%,d\n", agi);
+      System.out.printf("Deduction: $%,d\n", LabProgram.getDeduction(status));
+      System.out.printf("Taxable income: $%,d\n", LabProgram.calcTaxable(agi, LabProgram.getDeduction(status)));
+      System.out.printf("Federal tax: $%,d\n",  LabProgram.calcTax(status, LabProgram.calcTaxable(agi, LabProgram.getDeduction(status))));
+      System.out.printf("Tax due: $%,d\n",  LabProgram.calcTaxDue(LabProgram.calcTax(status, LabProgram.calcTaxable(agi, LabProgram.getDeduction(status))), withheld));
+
+   }
+}
